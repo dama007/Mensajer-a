@@ -1,9 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package vista;
+
+import daw.UserDAO;
+import exception.MyException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -56,6 +58,11 @@ public class Login extends javax.swing.JFrame {
         });
 
         jButton2.setText("Acceder");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,6 +115,26 @@ public class Login extends javax.swing.JFrame {
         register.setLocationRelativeTo(null);
         register.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         if (jTextField1.getText().isEmpty() || jPasswordField1.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(this, "No se pueden dejar campos en blanco.");
+        } else {
+            try {
+                UserDAO userDAO = new UserDAO();
+                String username = jTextField1.getText();
+                String password = new String(jPasswordField1.getPassword());
+                if (userDAO.validateUser(username, password)) {
+                    
+                } else {
+                    JOptionPane.showMessageDialog(this, "Usuario o Contraseña incorrecto.");
+                }
+               
+            } catch (MyException ex) {
+                 JOptionPane.showMessageDialog(this, "Error de validar");
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
